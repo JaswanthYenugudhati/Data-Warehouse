@@ -1,0 +1,73 @@
+-- Truncate the target table before loading new data.
+-- This ensures that old or duplicate records are removed 
+-- and the table is ready for a fresh load.
+TRUNCATE TABLE bronze.crm_cust_info;
+
+-- Bulk insert data into the Bronze layer table (crm_cust_info)
+-- from the specified CSV file location.
+-- The Bronze layer stores raw data as it is ingested from source systems.
+BULK INSERT bronze.crm_cust_info
+FROM 'C:\Users\jaswa\OneDrive\Desktop\Data Warehouse\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_crm\cust_info.csv'
+WITH (
+    FIRSTROW = 2,             -- Skips the header row in the CSV file
+    FIELDTERMINATOR = ',',    -- Specifies comma as the column separator
+    TABLOCK                   -- Improves performance by locking the entire table during load
+);
+
+-- Purpose:
+-- This step loads raw CRM customer data into the Bronze schema.
+-- The data will later be cleaned, transformed, and moved to the Silver and Gold layers
+-- as part of the data warehouse pipeline.
+
+
+truncate table bronze.crm_prd_info
+bulk insert bronze.crm_prd_info
+from 'C:\Users\jaswa\OneDrive\Desktop\Data Warehouse\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_crm\prd_info.csv'
+with (
+	firstrow = 2,
+	tablock,
+	fieldterminator = ','
+);
+
+
+truncate table bronze.crm_sales_details
+bulk insert bronze.crm_sales_details
+from 'C:\Users\jaswa\OneDrive\Desktop\Data Warehouse\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_crm\sales_details.csv'
+with (
+	firstrow = 2,
+	tablock,
+	fieldterminator = ','
+);
+
+
+truncate table bronze.erp_cust_az12
+bulk insert bronze.erp_cust_az12
+from 'C:\Users\jaswa\OneDrive\Desktop\Data Warehouse\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_erp\cust_az12.csv'
+with (
+	firstrow = 2,
+	tablock,
+	fieldterminator = ','
+);
+
+
+
+truncate table bronze.erp_loc_a101
+bulk insert bronze.erp_loc_a101
+from 'C:\Users\jaswa\OneDrive\Desktop\Data Warehouse\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_erp\loc_a101.csv'
+with (
+	firstrow = 2,
+	tablock,
+	fieldterminator = ','
+);
+
+
+
+truncate table bronze.erp_px_cat_g1v2
+bulk insert bronze.erp_px_cat_g1v2
+from 'C:\Users\jaswa\OneDrive\Desktop\Data Warehouse\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_erp\px_cat_g1v2.csv'
+with (
+	firstrow = 2,
+	tablock,
+	fieldterminator = ','
+);
+
